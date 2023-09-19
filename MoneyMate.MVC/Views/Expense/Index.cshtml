@@ -1,0 +1,60 @@
+﻿@model IEnumerable<MoneyMate.Models.Expense.ExpenseListItem>
+@{
+    ViewData["Title"] = "Expense Index";
+}
+
+<h1>Expense Index</h1>
+<p>
+    <a asp-action="Create">Create Expense</a>
+</p>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExpenseCategory)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ExpenseCategory)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", "Expense", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", "Expense", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", "Expense", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

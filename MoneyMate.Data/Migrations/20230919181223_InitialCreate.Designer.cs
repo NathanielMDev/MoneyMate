@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MoneyMate.Data.DataEntities;
 
@@ -11,9 +12,11 @@ using MoneyMate.Data.DataEntities;
 namespace MoneyMate.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230919181223_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,13 +54,13 @@ namespace MoneyMate.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f6e8d4d7-154d-49c6-b8e5-2d9250f13281",
+                            Id = "21b639d5-0c6a-43fe-85bf-65fb5842cb43",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
-                            Id = "f4054c95-0087-429f-a5a5-739b739e255b",
+                            Id = "f24e262a-c09b-4745-9079-c994113a935e",
                             Name = "User",
                             NormalizedName = "USER"
                         });

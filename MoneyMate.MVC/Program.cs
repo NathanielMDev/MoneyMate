@@ -1,7 +1,12 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using MoneyMate.Data;
 using MoneyMate.Data.DataEntities;
 using MoneyMate.Data.Entities;
+using MoneyMate.Services.CurrencyService;
+using MoneyMate.Services.ExpenseCategoryService;
+using MoneyMate.Services.ExpenseService;
+using MoneyMate.Services.PaymentService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +20,19 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddRazorPages();
+
+builder.Services.AddScoped<IExpenseService, ExpenseService>();
+builder.Services.AddScoped<IExpenseCategoryService, ExpenseCategoryService>();
+builder.Services.AddScoped<IPaymentMethodService, PaymentMethodService>();
+builder.Services.AddScoped<ICurrencyService, CurrencyService>();
+
 var app = builder.Build();
+
+if (args.Length == 1 && args[0].ToLower() == "seeddata")
+{
+    Seed.SeedData(app);
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

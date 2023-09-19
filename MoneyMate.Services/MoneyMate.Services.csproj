@@ -10,4 +10,16 @@
     <ProjectReference Include="..\MoneyMate.Models\MoneyMate.Models.csproj" />
     <ProjectReference Include="..\MoneyMate.Data\MoneyMate.Data.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="CurrencyService\" />
+    <None Remove="ExpenseService\" />
+    <None Remove="ExpenseCategoryService\" />
+    <None Remove="PaymentMethodService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CurrencyService\" />
+    <Folder Include="ExpenseService\" />
+    <Folder Include="ExpenseCategoryService\" />
+    <Folder Include="PaymentMethodService\" />
+  </ItemGroup>
 </Project>

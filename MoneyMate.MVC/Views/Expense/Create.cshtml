@@ -1,0 +1,58 @@
+﻿@model MoneyMate.Models.Expense.ExpenseCreate
+
+@{ViewData["Title"] = "Create an Expense";}
+
+<h1>Create an Expense</h1>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label"></label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Date" class="control-label"></label>
+                <input asp-for="Date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="CategoryId" class="control-label">Category</label>
+                @Html.DropDownListFor(model => model.CategoryId, ViewData["CategoryList"] as SelectList, "Select Category", new { @class = "form-control" })
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PaymentId" class="control-label">Payment Method</label>
+                @Html.DropDownListFor(model => model.PaymentId, ViewData["PaymentMethodList"] as SelectList, "Select Payment Method", new { @class = "form-control" })
+                <span asp-validation-for="PaymentId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CurrencyId" class="control-label">Currency</label>
+                @Html.DropDownListFor(model => model.CurrencyId, ViewData["CurrencyCodeList"] as SelectList, "Select Currency", new { @class = "form-control" })
+                <span asp-validation-for="CurrencyId" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+            <div>
+                <a asp-action="Index">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+

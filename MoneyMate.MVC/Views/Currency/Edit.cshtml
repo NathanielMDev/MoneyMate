@@ -1,0 +1,34 @@
+﻿@model MoneyMate.Models.Currency.CurrencyEdit
+
+@{
+    string title = "Edit" + Model.CurrencyName;
+    ViewData["Title"] = title;
+}
+
+<h1>@title</h1>
+</hr>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <label asp-for="Code"></label>
+            <input asp-for="Code" />
+            <span asp-validation-for="Code"></span>
+
+            <label asp-for="CurrencyName"></label>
+            <input asp-for="CurrencyName" />
+            <span asp-validation-for="CurrencyName"></span>
+
+            <div class="form-group">
+                @Html.HiddenFor(model => model.CurrencyId)
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

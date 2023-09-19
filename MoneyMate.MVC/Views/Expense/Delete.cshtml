@@ -1,0 +1,39 @@
+﻿@model MoneyMate.Models.Expense.ExpenseDetail
+
+@{
+    string title = "Delete " + Model.Description;
+    ViewData["Title"] = title;
+}
+
+<h1>@title</h1>
+<h4>Are you sure you want to delete @Model.Description?</h4>
+<hr />
+
+<dl class="row">
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Description)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Description)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Amount)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Amount)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Date)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Date)
+    </dd>
+</dl>
+
+<form asp-action="DeleteConfirmed" method="post">
+    @Html.HiddenFor(model => model.ExpenseId)
+    <div class="form-actions no-color">
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </div>
+</form>

@@ -12,8 +12,8 @@ using MoneyMate.Data.DataEntities;
 namespace MoneyMate.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230919151217_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230919181524_Seedupdate")]
+    partial class Seedupdate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,13 +54,13 @@ namespace MoneyMate.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "7a5e02cc-3981-4122-8205-23b387762d27",
+                            Id = "f6e8d4d7-154d-49c6-b8e5-2d9250f13281",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
-                            Id = "b102b272-26e0-4885-8e2d-c60e215f00af",
+                            Id = "f4054c95-0087-429f-a5a5-739b739e255b",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -249,6 +249,128 @@ namespace MoneyMate.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("MoneyMate.Data.Entities.Budget", b =>
+                {
+                    b.Property<int>("BudgetID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BudgetID"));
+
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ExpenseId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("BudgetID");
+
+                    b.HasIndex("ExpenseId");
+
+                    b.ToTable("Budgets");
+                });
+
+            modelBuilder.Entity("MoneyMate.Data.Entities.Currency", b =>
+                {
+                    b.Property<int>("CurrencyId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CurrencyId"));
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CurrencyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CurrencyId");
+
+                    b.ToTable("Currencies");
+                });
+
+            modelBuilder.Entity("MoneyMate.Data.Entities.Expense", b =>
+                {
+                    b.Property<int>("ExpenseId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ExpenseId"));
+
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CurrencyId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PaymentId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PaymentMethodPaymentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ExpenseId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("CurrencyId");
+
+                    b.HasIndex("PaymentMethodPaymentId");
+
+                    b.ToTable("Expenses");
+                });
+
+            modelBuilder.Entity("MoneyMate.Data.Entities.ExpenseCategory", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"));
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CategoryId");
+
+                    b.ToTable("ExpenseCategories");
+                });
+
+            modelBuilder.Entity("MoneyMate.Data.Entities.PaymentMethod", b =>
+                {
+                    b.Property<int>("PaymentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PaymentId"));
+
+                    b.Property<string>("PaymentName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PaymentId");
+
+                    b.ToTable("PaymentMethods");
+                });
+
             modelBuilder.Entity("MoneyMate.Data.Entities.AppUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
@@ -305,6 +427,40 @@ namespace MoneyMate.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("MoneyMate.Data.Entities.Budget", b =>
+                {
+                    b.HasOne("MoneyMate.Data.Entities.Expense", "Expense")
+                        .WithMany()
+                        .HasForeignKey("ExpenseId");
+
+                    b.Navigation("Expense");
+                });
+
+            modelBuilder.Entity("MoneyMate.Data.Entities.Expense", b =>
+                {
+                    b.HasOne("MoneyMate.Data.Entities.ExpenseCategory", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MoneyMate.Data.Entities.Currency", "Currency")
+                        .WithMany()
+                        .HasForeignKey("CurrencyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MoneyMate.Data.Entities.PaymentMethod", "PaymentMethod")
+                        .WithMany()
+                        .HasForeignKey("PaymentMethodPaymentId");
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Currency");
+
+                    b.Navigation("PaymentMethod");
                 });
 #pragma warning restore 612, 618
         }

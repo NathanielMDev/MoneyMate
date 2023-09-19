@@ -28,4 +28,16 @@
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="Views\Currency\" />
+    <None Remove="Views\Expense\" />
+    <None Remove="Views\ExpenseCategory\" />
+    <None Remove="Views\PaymentMethod\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Currency\" />
+    <Folder Include="Views\Expense\" />
+    <Folder Include="Views\ExpenseCategory\" />
+    <Folder Include="Views\PaymentMethod\" />
+  </ItemGroup>
 </Project>

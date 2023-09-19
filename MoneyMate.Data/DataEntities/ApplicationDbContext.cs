@@ -29,4 +29,14 @@ public class ApplicationDbContext : IdentityDbContext
             }
         );
     }
+
+    public DbSet<Expense> Expenses { get; set; }
+
+    public DbSet<Budget> Budgets { get; set; }
+
+    public DbSet<Currency> Currencies { get; set; }
+
+    public DbSet<ExpenseCategory> ExpenseCategories { get; set; }
+
+    public DbSet<PaymentMethod> PaymentMethods { get; set; }
 }
