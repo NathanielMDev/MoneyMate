@@ -12,8 +12,8 @@ using MoneyMate.Data.DataEntities;
 namespace MoneyMate.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230919181524_Seedupdate")]
-    partial class Seedupdate
+    [Migration("20230921211114_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,13 +54,13 @@ namespace MoneyMate.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f6e8d4d7-154d-49c6-b8e5-2d9250f13281",
+                            Id = "95518379-f0c6-422b-a7bf-8d6a54d9baf4",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
-                            Id = "f4054c95-0087-429f-a5a5-739b739e255b",
+                            Id = "18c8aaf0-3bc6-4817-9988-99848f50a72a",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -263,15 +263,16 @@ namespace MoneyMate.Data.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("ExpenseId")
-                        .HasColumnType("int");
+                    b.Property<double>("PreviousExpenses")
+                        .HasColumnType("float");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("BudgetID");
+                    b.Property<double>("TotalExpenses")
+                        .HasColumnType("float");
 
-                    b.HasIndex("ExpenseId");
+                    b.HasKey("BudgetID");
 
                     b.ToTable("Budgets");
                 });
@@ -308,6 +309,9 @@ namespace MoneyMate.Data.Migrations
                     b.Property<double>("Amount")
                         .HasColumnType("float");
 
+                    b.Property<int?>("BudgetID")
+                        .HasColumnType("int");
+
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
@@ -327,6 +331,8 @@ namespace MoneyMate.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("ExpenseId");
+
+                    b.HasIndex("BudgetID");
 
                     b.HasIndex("CategoryId");
 
@@ -348,6 +354,9 @@ namespace MoneyMate.Data.Migrations
                     b.Property<string>("CategoryName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("TotalExpenses")
+                        .HasColumnType("float");
 
                     b.HasKey("CategoryId");
 
@@ -429,17 +438,12 @@ namespace MoneyMate.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MoneyMate.Data.Entities.Budget", b =>
-                {
-                    b.HasOne("MoneyMate.Data.Entities.Expense", "Expense")
-                        .WithMany()
-                        .HasForeignKey("ExpenseId");
-
-                    b.Navigation("Expense");
-                });
-
             modelBuilder.Entity("MoneyMate.Data.Entities.Expense", b =>
                 {
+                    b.HasOne("MoneyMate.Data.Entities.Budget", null)
+                        .WithMany("Expenses")
+                        .HasForeignKey("BudgetID");
+
                     b.HasOne("MoneyMate.Data.Entities.ExpenseCategory", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
@@ -461,6 +465,11 @@ namespace MoneyMate.Data.Migrations
                     b.Navigation("Currency");
 
                     b.Navigation("PaymentMethod");
+                });
+
+            modelBuilder.Entity("MoneyMate.Data.Entities.Budget", b =>
+                {
+                    b.Navigation("Expenses");
                 });
 #pragma warning restore 612, 618
         }

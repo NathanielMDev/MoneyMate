@@ -9,7 +9,11 @@ public interface IExpenseCategoryService
 
     Task<bool> CreateExpenseCategory(ExpenseCategoryCreate model);
 
+    Task<bool> UpdateExpenseCategory(ExpenseCategoryDetail model);
+
     Task<ExpenseCategoryDetail> GetExpenseCategoryById(int id);
+
+    Task<List<Expense>> GetExpensesByCategoryId(int categoryId);
 
     Task<bool> DeleteExpenseCategory(int id);
 }

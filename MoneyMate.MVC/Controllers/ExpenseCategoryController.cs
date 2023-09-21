@@ -34,6 +34,23 @@ public class ExpenseCategoryController : Controller
         return View(model);
     }
 
+    public async Task<IActionResult> ViewExpenses(int categoryId)
+    {
+        var expenses = await _service.GetExpensesByCategoryId(categoryId);
+
+        // You can also pass the category name to the view for display
+        var category = await _service.GetExpenseCategoryById(categoryId);
+
+        var viewModel = new CategoryExpensesView
+        {
+            CategoryName = category.CategoryName,
+            Expenses = expenses
+        };
+
+        return View(viewModel);
+    }
+
+
     [HttpPost]
     public async Task<IActionResult> Create(ExpenseCategoryCreate model)
     {
@@ -45,6 +62,44 @@ public class ExpenseCategoryController : Controller
         }
 
         return View(model);
+    }
+
+    public async Task<IActionResult> Edit(int id)
+    {
+        var expenseCategory = await _service.GetExpenseCategoryById(id);
+        if (expenseCategory == null)
+        {
+            return NotFound();
+        }
+
+        ExpenseCategoryDetail editModel = new ExpenseCategoryDetail
+        {
+            CategoryId = expenseCategory.CategoryId,
+            CategoryName = expenseCategory.CategoryName,
+        };
+
+        return View(editModel);
+
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Edit(ExpenseCategoryDetail model)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
+        var expenseCategory = await _service.GetExpenseCategoryById(model.CategoryId);
+
+        if (expenseCategory == null)
+        {
+            return RedirectToAction(nameof(Index));
+        }
+
+        await _service.UpdateExpenseCategory(model);
+
+        return RedirectToAction(nameof(Index));
     }
 
     public async Task<IActionResult> Delete(int id)

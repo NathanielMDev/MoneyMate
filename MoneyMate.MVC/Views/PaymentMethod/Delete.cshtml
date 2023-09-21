@@ -1,33 +1,27 @@
 ﻿@model MoneyMate.Models.PaymentMethod.PaymentMethodDetail
 
-@{
-    string title = "Delete" + Model.PaymentName;
-    ViewData["Title"] = title;
-}
+<div class="container">
+    <h1>Delete @Model.PaymentName</h1>
 
-<h1>@title</h1>
-<h4>Are you sure you want to delete @Model.PaymentName</h4>
-<hr />
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Are you sure you want to delete @Model.PaymentName?</h4>
+            <hr />
 
-<dl class="row">
-    <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => model.PaymentId)
-    </dt>
-    <dd class="col-sm-10">
-        @Html.DisplayFor(model => model.PaymentId)
-    </dd>
-    <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => model.PaymentName)
-    </dt>
-    <dd class="col-sm-10">
-        @Html.DisplayFor(model => model.PaymentName)
-    </dd>
-</dl>
+            <dl class="row">
+                <dt class="col-sm-4">Payment ID:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.PaymentId)</dd>
+                <dt class="col-sm-4">Payment Name:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.PaymentName)</dd>
+            </dl>
 
-<form asp-action="Delete" method="post">
-    @Html.HiddenFor(model => model.PaymentId)
-    <div class="form-actions no-color">
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
+            <form asp-action="Delete" method="post">
+                @Html.HiddenFor(model => model.PaymentId)
+                <div class="form-group">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                </div>
+            </form>
+        </div>
     </div>
-</form>
+</div>

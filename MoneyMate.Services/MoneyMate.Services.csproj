@@ -15,11 +15,16 @@
     <None Remove="ExpenseService\" />
     <None Remove="ExpenseCategoryService\" />
     <None Remove="PaymentMethodService\" />
+    <None Remove="BudgetService\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CurrencyService\" />
     <Folder Include="ExpenseService\" />
     <Folder Include="ExpenseCategoryService\" />
     <Folder Include="PaymentMethodService\" />
+    <Folder Include="BudgetService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 </Project>

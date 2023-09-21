@@ -1,54 +1,72 @@
 ﻿@model MoneyMate.Models.Expense.ExpenseEdit
 @{
-    string title = "Edit" + Model.Description;
+    string title = "Edit " + Model.Description;
     ViewData["Title"] = title;
 }
 
-<h1>@title</h1>
-<hr />
+<div class="container section-container">
+    <h1>@title</h1>
+    <hr />
 
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            @Html.HiddenFor(model => model.ExpenseId)
-            <label asp-for="Description"></label>
-            <input asp-for="Description" />
-            <span asp-validation-for="Description"></span>
+    <div class="row align-items-center justify-content-center">
+        <div class="col-md-8 col-sm-10 col-12">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <label asp-for="Amount"></label>
-            <input asp-for="Amount" />
-            <span asp-validation-for="Amount"></span>
+                @Html.HiddenFor(model => model.ExpenseId)
 
-            <label asp-for="Date"></label>
-            <input asp-for="Date" />
-            <span asp-validation-for="Date"></span>
+                <div class="form-group">
+                    <label asp-for="Amount">Amount</label>
+                    <input asp-for="Amount" class="form-control" placeholder="Enter amount" required />
+                    <span asp-validation-for="Amount" class="text-danger"></span>
+                </div>
 
-            <div class="form-group">
-                <label asp-for="CategoryId" class="control-label">Category</label>
-                @Html.DropDownListFor(model => model.CategoryId, ViewData["CategoryList"] as SelectList, new { @class = "form-control" })
-                <span asp-validation-for="CategoryId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PaymentId" class="control-label">Payment Method</label>
-                @Html.DropDownListFor(model => model.PaymentId, ViewData["PaymentMethodList"] as SelectList, new { @class = "form-control" })
-                <span asp-validation-for="PaymentId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CurrencyId" class="control-label">Currency</label>
-                @Html.DropDownListFor(model => model.CurrencyId, ViewData["CurrencyCodeList"] as SelectList, new { @class = "form-control" })
-                <span asp-validation-for="CurrencyId" class="text-danger"></span>
-            </div>
+                <div class="form-group">
+                    <label asp-for="Date">Date</label>
+                    <input asp-for="Date" type="date" class="form-control" required />
+                    <span asp-validation-for="Date" class="text-danger"></span>
+                </div>
 
+                <div class="form-group">
+                    <label asp-for="Description">Description</label>
+                    <input asp-for="Description" class="form-control" placeholder="Enter description" />
+                </div>
 
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+                <div class="form-group">
+                    <label asp-for="CategoryId">Category</label>
+                    <select asp-for="CategoryId" asp-items="@(new SelectList(ViewData["CategoryList"] as SelectList, "Value", "Text"))" class="form-control">
+                        <option value="">Select Category</option>
+                    </select>
+                    <span asp-validation-for="CategoryId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="PaymentId">Payment Method</label>
+                    <select asp-for="PaymentId" asp-items="@(new SelectList(ViewData["PaymentMethodList"] as SelectList, "Value", "Text"))" class="form-control">
+                        <option value="">Select Payment Method</option>
+                    </select>
+                    <span asp-validation-for="PaymentId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="CurrencyId">Currency</label>
+                    <select asp-for="CurrencyId" asp-items="@(new SelectList(ViewData["CurrencyCodeList"] as SelectList, "Value", "Text"))" class="form-control">
+                        <option value="">Select Currency</option>
+                    </select>
+                    <span asp-validation-for="CurrencyId" class="text-danger"></span>
+                </div>
+
+                <hr />
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }

@@ -2,7 +2,38 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@section jumbotron {
+    <div class="jumbotron text-center">
+        <div class="jumbotron">
+            <h1>Money Mate</h1>
+            <p class="lead">Your personal finance manager</p>
+        </div>
+    </div>
+}
+
+@section maincontent {
+    <div class="container home-container">
+
+
+        <div class="row justify-content-between">
+            <div class="col-md-4 mx-auto text-center mr-2">
+                <h2>Create an Expense</h2>
+                <p>Click below to create a new expense record.</p>
+                <p><a class="btn-jumbo" href="/Expense/Create" role="button">Create Expense &raquo;</a></p>
+            </div>
+
+            <div class="col-md-4 mx-auto text-center mr-2">
+                <h2>Create a Category</h2>
+                <p>Click below to create a new expense category.</p>
+                <p><a class="btn-jumbo" href="/ExpenseCategory/Create" role="button">Create Category &raquo;</a></p>
+            </div>
+
+            <div class="col-md-4 mx-auto text-center">
+                <h2>View Budget</h2>
+                <p>Click below to view a breakdown of your expenses.</p>
+                <p><a class="btn-jumbo" href="/Budget" role="button">View Budget &raquo;</a></p>
+            </div>
+        </div>
+       
+    </div>
+}

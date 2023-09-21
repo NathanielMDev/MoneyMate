@@ -25,6 +25,7 @@ public class ExpenseService : IExpenseService
                 Description = e.Description,
                 Date = e.Date,
                 ExpenseCategory = e.Category.CategoryName,
+                CategoryId = e.CategoryId,
             }).ToListAsync();
 
         return expenses;
@@ -66,7 +67,7 @@ public class ExpenseService : IExpenseService
 
         var savedChanges = await _context.SaveChangesAsync();
 
-        return true;
+        return savedChanges > 0;
     }
 
     public async Task<ExpenseDetail> GetExpenseById(int id)

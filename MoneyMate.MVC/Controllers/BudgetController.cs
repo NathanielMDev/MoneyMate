@@ -1,18 +1,29 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MoneyMate.Data.DataEntities;
+using MoneyMate.Models.Budget;
+using MoneyMate.Services.BudgetService;
+using Newtonsoft.Json;
+
 namespace MoneyMate.Controllers;
 
 public class BudgetController : Controller
 {
-    private readonly ApplicationDbContext _context;
+    private readonly IBudgetService _service;
 
-    public BudgetController(ApplicationDbContext context)
+    public BudgetController(IBudgetService service)
     {
-        _context = context;
+        _service = service;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        return View();
+        var categoryTotals = await _service.GetCategoryTotals();
+        var viewModel = new BudgetViewModel
+        {
+            CategoryTotals = categoryTotals,
+        };
+
+        return View(viewModel);
     }
+
+    
 }

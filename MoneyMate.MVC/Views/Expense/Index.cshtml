@@ -1,60 +1,97 @@
 ﻿@model IEnumerable<MoneyMate.Models.Expense.ExpenseListItem>
+@using MoneyMate.Models.Expense
+
 @{
     ViewData["Title"] = "Expense Index";
 }
 
-<h1>Expense Index</h1>
-<p>
-    <a asp-action="Create">Create Expense</a>
-</p>
+<div class="container expense-container">
+    <h1>Expense Index</h1>
+    <hr />
 
+    <div class="d-flex justify-content-between mb-3">
+        <a asp-action="Create" class="btn btn-primary">Create Expense</a>
 
-<table class="table">
-    <thead>
+        @{
+            var sortOptions = new List<SelectListItem>
+            {
+                new SelectListItem { Text = "Id", Value = "id" },
+                new SelectListItem { Text = "Amount", Value = "amount" },
+                new SelectListItem { Text = "Date", Value = "date" },
+                new SelectListItem { Text = "Category", Value = "category" },
+            };
+        }
+
+        <div class="form-group">
+            <select id="sortOption" name="sortOption" onchange="applySort()" class="form-control form-control-sm">
+                <option value="">-- Sort By --</option>
+                @foreach (var option in sortOptions)
+                {
+                    <option value="@option.Value">@option.Text</option>
+                }
+            </select>
+        </div>
+    </div>
+
+<table class="table table-striped">
+    <thead class="thead-dark">
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Amount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ExpenseCategory)
-            </th>
-            <th></th>
+            <th>@Html.DisplayNameFor(model => model.Id)</th>
+            <th>@Html.DisplayNameFor(model => model.Amount)</th>
+            <th>@Html.DisplayNameFor(model => model.Date)</th>
+            <th>@Html.DisplayNameFor(model => model.Description)</th>
+            <th>@Html.DisplayNameFor(model => model.ExpenseCategory)</th>
+            <th class="actions">Actions</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
+                <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                <td>$@item.Amount.ToString("0.00")</td>
+                <td>@item.Date.ToString("MM/dd/yyyy")</td>
+                <td>@Html.DisplayFor(modelItem => item.Description)</td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Id)
+                    <a asp-controller="Expenses" asp-action="View" asp-route-id="@item.CategoryId">@item.ExpenseCategory</a>
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Amount)
+                <td class="actions">
+                    <div class="d-flex">
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-info btn-sm custom-margin">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-success btn-sm custom-margin">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Delete</a>
+                    </div>
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Date)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ExpenseCategory)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", "Expense", new { id = item.Id }) |
-                    @Html.ActionLink("Details", "Details", "Expense", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", "Expense", new { id = item.Id })
-                </td>
+
+
             </tr>
         }
     </tbody>
 </table>
+</div>
+
+<script>
+    function applySort() {
+        var selectedSortOption = document.getElementById("sortOption").value;
+        var currentUrl = window.location.href;
+        var urlWithoutQuery = currentUrl.split('?')[0]; // Remove existing query parameters
+        var newUrl = urlWithoutQuery + '?sortOption=' + selectedSortOption;
+        window.location.href = newUrl;
+    }
+
+    function setSelectedOption() {
+        var selectedSortOption = "@ViewBag.SortOption"; // Get the selected option from ViewBag
+        var dropdown = document.getElementById("sortOption");
+
+        for (var i = 0; i < dropdown.options.length; i++) {
+            if (dropdown.options[i].value === selectedSortOption) {
+                dropdown.options[i].selected = true;
+            } else {
+                dropdown.options[i].selected = false;
+            }
+        }
+    }
+
+    window.onload = setSelectedOption;
+</script>
+

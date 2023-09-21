@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using MoneyMate.Data.Entities;
 using MoneyMate.Models.Expense;
 using MoneyMate.Services.ExpenseService;
@@ -16,12 +16,35 @@ public class ExpenseController : Controller
         _service = service;
     }
 
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(string sortOption)
     {
+        // Retrieve the list of expenses from the service
+        var expenses = await _service.GetAllExpenses();
 
-        List<ExpenseListItem> expenses = await _service.GetAllExpenses();
+        // Sort expenses based on the selected sorting option
+        switch (sortOption)
+        {
+            case "amount":
+                expenses = expenses.OrderByDescending(e => e.Amount).ToList();
+                break;
+            case "date":
+                expenses = expenses.OrderByDescending(e => e.Date).ToList();
+                break;
+            case "category": // Sort by CategoryId
+                expenses = expenses.OrderBy(e => e.CategoryId).ToList();
+                break;
+            default: // Default sorting by ID
+                expenses = expenses.OrderBy(e => e.Id).ToList();
+                break;
+        }
+
+        ViewBag.SortOption = sortOption; // Pass the selected sort option to the view
+
         return View(expenses);
     }
+
+
+
 
 
     public async Task<IActionResult> Create()
@@ -125,6 +148,12 @@ public class ExpenseController : Controller
     }
 
 
+    private void GetSelectLists(List<ExpenseCategory> categories, List<PaymentMethod> paymentMethods, List<Currency> currencies)
+    {
+        ViewData["CategoryList"] = new SelectList(categories, "CategoryId", "CategoryName");
+        ViewData["PaymentMethodList"] = new SelectList(paymentMethods, "PaymentId", "PaymentName");
+        ViewData["CurrencyCodeList"] = new SelectList(currencies, "CurrencyId", "Code");
+    }
 
     [HttpPost]
     public async Task<IActionResult> Edit(ExpenseEdit model)
@@ -199,11 +228,5 @@ public class ExpenseController : Controller
         }
     }
 
-    private void GetSelectLists(List<ExpenseCategory> categories, List<PaymentMethod> paymentMethods, List<Currency> currencies)
-    {
-        ViewData["CategoryList"] = new SelectList(categories, "CategoryId", "CategoryName");
-        ViewData["PaymentMethodList"] = new SelectList(paymentMethods, "PaymentId", "PaymentName");
-        ViewData["CurrencyCodeList"] = new SelectList(currencies, "CurrencyId", "Code");
-    }
 
 }

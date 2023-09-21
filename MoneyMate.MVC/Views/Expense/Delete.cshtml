@@ -5,35 +5,40 @@
     ViewData["Title"] = title;
 }
 
-<h1>@title</h1>
-<h4>Are you sure you want to delete @Model.Description?</h4>
-<hr />
+<div class="container section-container">
+    <h1>@title</h1>
+    <h4>Are you sure you want to delete the expense "<strong>@Model.Description</strong>"?</h4>
+    <hr />
 
-<dl class="row">
-    <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => model.Description)
-    </dt>
-    <dd class="col-sm-10">
-        @Html.DisplayFor(model => model.Description)
-    </dd>
-    <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => model.Amount)
-    </dt>
-    <dd class="col-sm-10">
-        @Html.DisplayFor(model => model.Amount)
-    </dd>
-    <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => model.Date)
-    </dt>
-    <dd class="col-sm-10">
-        @Html.DisplayFor(model => model.Date)
-    </dd>
-</dl>
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table table-bordered mx-auto">
+                <tr>
+                    <th>Description</th>
+                    <td>@Html.DisplayFor(model => model.Description)</td>
+                </tr>
+                <tr>
+                    <th>Amount</th>
+                    <td>$@Model.Amount.ToString("0.00")</td>
+                </tr>
+                <tr>
+                    <th>Date</th>
+                    <td>@Model.Date.ToString("MM/dd/yyyy")</td>
+                </tr>
+            </table>
 
-<form asp-action="DeleteConfirmed" method="post">
-    @Html.HiddenFor(model => model.ExpenseId)
-    <div class="form-actions no-color">
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
+            <form asp-action="DeleteConfirmed" method="post">
+                @Html.HiddenFor(model => model.ExpenseId)
+                <div class="form-group">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
     </div>
-</form>
+</div>
+
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

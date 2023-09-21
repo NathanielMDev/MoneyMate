@@ -1,0 +1,169 @@
+﻿@model MoneyMate.Models.Budget.BudgetViewModel
+
+@{
+    ViewData["Title"] = "Total Spending by Category";
+}
+
+<div class="container budget-container">
+    <h1>Total Spending by Category</h1>
+    <hr />
+
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Category</th>
+                <th>Expense Count</th>
+                <th>Total Amount</th>
+                <th>Average Purchase</th>
+                <th>Expenditure Percentage</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var categoryTotal in Model.CategoryTotals.OrderByDescending(ct => ct.TotalAmount))
+            {
+                <tr>
+                    <td>
+                        <a asp-controller="ExpenseCategory" asp-action="ViewExpenses" asp-route-categoryId="@categoryTotal.CategoryId">
+                            @categoryTotal.CategoryName
+                        </a>
+                    </td>
+                    <td>@categoryTotal.ExpenseCount</td>
+                    <td>$@categoryTotal.TotalAmount.ToString("0.00")</td>
+                    <td>$@categoryTotal.AverageExpense.ToString("0.00")</td>
+                    <td>@((100 * categoryTotal.TotalAmount / Model.ExpenseTotal).ToString("0.00"))%</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <h4>Spending Distribution Chart</h4>
+            <div class="graph-container">
+                <canvas id="categoryChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <h4>Expense Distribution by Category</h4>
+            <div class="graph-container">
+                <canvas id="categoryPieChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <hr/>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        function createBarChart() {
+            var ctx = document.getElementById('categoryChart').getContext('2d');
+            var categoryData = @Html.Raw(Json.Serialize(Model.CategoryTotals.Select(ct => ct.CategoryName).ToList()));
+            var expenseData = @Html.Raw(Json.Serialize(Model.CategoryTotals.Select(ct => ct.TotalAmount).ToList()));
+
+            var chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: categoryData,
+                    datasets: [{
+                        label: 'Total Amount Spent',
+                        data: expenseData,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    tooltips: {
+                        callbacks: {
+                            label: function (context) {
+                                return '$' + context.parsed.toFixed(2);
+                            },
+                        },
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Total Amount'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Category'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+        createBarChart();
+    </script>
+
+    <script>
+        function createPieChart() {
+            var pieCtx = document.getElementById('categoryPieChart').getContext('2d');
+            var pieData = @Html.Raw(Json.Serialize(Model.CategoryTotals.Select(ct => ct.TotalAmount).ToList()));
+            var pieLabels = @Html.Raw(Json.Serialize(Model.CategoryTotals.Select(ct => ct.CategoryName).ToList()));
+
+            var pieChart = new Chart(pieCtx, {
+                type: 'pie',
+                data: {
+                    labels: pieLabels,
+                    datasets: [{
+                        data: pieData,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    tooltips: {
+                        callbacks: {
+                            label: function (context) {
+                                return '$' + context.parsed.toFixed(2);
+                            },
+                        },
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'right'
+                        },
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+        createPieChart();
+    </script>
+}

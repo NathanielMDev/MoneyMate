@@ -1,0 +1,29 @@
+﻿@model MoneyMate.Models.ExpenseCategory.CategoryExpensesView
+
+<div class="detail-container">
+    <h1>Expenses for @Model.CategoryName</h1>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var expense in Model.Expenses)
+            {
+                <tr>
+                    <td>@expense.Date.ToString("MM/dd/yyyy")</td>
+                    <td>@expense.Description</td>
+                    <td>$@expense.Amount.ToString("0.00")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div>
+        <a asp-action="Index" class="btn btn-primary">Back to List</a>
+    </div>
+</div>
