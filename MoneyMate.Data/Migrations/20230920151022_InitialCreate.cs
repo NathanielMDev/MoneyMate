@@ -54,6 +54,23 @@ namespace MoneyMate.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Budgets",
+                columns: table => new
+                {
+                    BudgetID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Amount = table.Column<double>(type: "float", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TotalExpenses = table.Column<double>(type: "float", nullable: false),
+                    PreviousExpenses = table.Column<double>(type: "float", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Budgets", x => x.BudgetID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Currencies",
                 columns: table => new
                 {
@@ -73,7 +90,8 @@ namespace MoneyMate.Data.Migrations
                 {
                     CategoryId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CategoryName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    CategoryName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TotalExpenses = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -211,11 +229,17 @@ namespace MoneyMate.Data.Migrations
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     PaymentId = table.Column<int>(type: "int", nullable: false),
                     PaymentMethodPaymentId = table.Column<int>(type: "int", nullable: true),
-                    CurrencyId = table.Column<int>(type: "int", nullable: false)
+                    CurrencyId = table.Column<int>(type: "int", nullable: false),
+                    BudgetID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Expenses", x => x.ExpenseId);
+                    table.ForeignKey(
+                        name: "FK_Expenses_Budgets_BudgetID",
+                        column: x => x.BudgetID,
+                        principalTable: "Budgets",
+                        principalColumn: "BudgetID");
                     table.ForeignKey(
                         name: "FK_Expenses_Currencies_CurrencyId",
                         column: x => x.CurrencyId,
@@ -235,34 +259,13 @@ namespace MoneyMate.Data.Migrations
                         principalColumn: "PaymentId");
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Budgets",
-                columns: table => new
-                {
-                    BudgetID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ExpenseId = table.Column<int>(type: "int", nullable: true),
-                    Amount = table.Column<double>(type: "float", nullable: false),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Budgets", x => x.BudgetID);
-                    table.ForeignKey(
-                        name: "FK_Budgets_Expenses_ExpenseId",
-                        column: x => x.ExpenseId,
-                        principalTable: "Expenses",
-                        principalColumn: "ExpenseId");
-                });
-
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "21b639d5-0c6a-43fe-85bf-65fb5842cb43", null, "Administrator", "ADMINISTRATOR" },
-                    { "f24e262a-c09b-4745-9079-c994113a935e", null, "User", "USER" }
+                    { "07ea0f5f-de95-4dc4-a614-5cda048c0a0c", null, "Administrator", "ADMINISTRATOR" },
+                    { "b8e00d6b-104a-499f-a83a-782985f480b3", null, "User", "USER" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -305,9 +308,9 @@ namespace MoneyMate.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Budgets_ExpenseId",
-                table: "Budgets",
-                column: "ExpenseId");
+                name: "IX_Expenses_BudgetID",
+                table: "Expenses",
+                column: "BudgetID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Expenses_CategoryId",
@@ -344,7 +347,7 @@ namespace MoneyMate.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Budgets");
+                name: "Expenses");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -353,7 +356,7 @@ namespace MoneyMate.Data.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Expenses");
+                name: "Budgets");
 
             migrationBuilder.DropTable(
                 name: "Currencies");

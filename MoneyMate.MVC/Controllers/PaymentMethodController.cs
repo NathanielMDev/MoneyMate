@@ -58,6 +58,7 @@ public class PaymentMethodController : Controller
         PaymentMethodEdit editModel = new PaymentMethodEdit
         {
             PaymentName = paymentMethod.PaymentName,
+            PaymentId = paymentMethod.PaymentId
         };
 
         return View(editModel);

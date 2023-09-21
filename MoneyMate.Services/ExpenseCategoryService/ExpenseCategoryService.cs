@@ -43,6 +43,16 @@ public class ExpenseCategoryService : IExpenseCategoryService
         return expenseCategoryDetail;
     }
 
+    public async Task<List<Expense>> GetExpensesByCategoryId(int categoryId)
+    {
+        var expenses = await _context.Expenses
+            .Where(e => e.CategoryId == categoryId)
+            .ToListAsync();
+
+        return expenses;
+    }
+
+
     public async Task<bool> CreateExpenseCategory(ExpenseCategoryCreate model)
     {
         var expenseCategory = new ExpenseCategory()
@@ -54,6 +64,22 @@ public class ExpenseCategoryService : IExpenseCategoryService
         int changes = await _context.SaveChangesAsync();
 
         return changes > 0;
+    }
+
+    public async Task<bool> UpdateExpenseCategory(ExpenseCategoryDetail model)
+    {
+        var entity = await _context.ExpenseCategories.FindAsync(model.CategoryId);
+
+        if (entity is null)
+        {
+            return false;
+        }
+
+        entity.CategoryName = model.CategoryName;
+
+        await _context.SaveChangesAsync();
+
+        return true;
     }
 
     public async Task<bool> DeleteExpenseCategory(int id)

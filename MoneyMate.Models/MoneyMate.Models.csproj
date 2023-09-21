@@ -14,11 +14,18 @@
     <None Remove="Expense\" />
     <None Remove="ExpenseCategory\" />
     <None Remove="PaymentMethod\" />
+    <None Remove="Budget\" />
+    <None Remove="DataPoints\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Currency\" />
     <Folder Include="Expense\" />
     <Folder Include="ExpenseCategory\" />
     <Folder Include="PaymentMethod\" />
+    <Folder Include="Budget\" />
+    <Folder Include="DataPoints\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 </Project>

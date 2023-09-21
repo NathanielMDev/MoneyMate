@@ -21,7 +21,6 @@ public class ExpenseCreate
     [Required]
     public int CurrencyId { get; set; }
 
-    public string UserId { get; set; }
 }
 
 

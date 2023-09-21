@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using MoneyMate.Data;
 using MoneyMate.Data.DataEntities;
 using MoneyMate.Data.Entities;
+using MoneyMate.Services.BudgetService;
 using MoneyMate.Services.CurrencyService;
 using MoneyMate.Services.ExpenseCategoryService;
 using MoneyMate.Services.ExpenseService;
@@ -26,6 +27,7 @@ builder.Services.AddScoped<IExpenseService, ExpenseService>();
 builder.Services.AddScoped<IExpenseCategoryService, ExpenseCategoryService>();
 builder.Services.AddScoped<IPaymentMethodService, PaymentMethodService>();
 builder.Services.AddScoped<ICurrencyService, CurrencyService>();
+builder.Services.AddScoped<IBudgetService, BudgetService>();
 
 var app = builder.Build();
 
@@ -53,9 +55,23 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.UseEndpoints(endpoints =>
+{
+
+    endpoints.MapControllerRoute(
+        name: "viewexpenses",
+        pattern: "expenses/view/{categoryId}",
+        defaults: new { controller = "ExpenseCategory", action = "ViewExpenses" }
+    );
+
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}"
+    );
+});
+
+
 app.MapRazorPages();
+
 
 app.Run();

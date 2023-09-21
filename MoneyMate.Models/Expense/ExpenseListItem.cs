@@ -14,5 +14,7 @@ public class ExpenseListItem
 
     public string? ExpenseCategory { get; set; }
 
+    public int CategoryId { get; set; }
+
 }
 

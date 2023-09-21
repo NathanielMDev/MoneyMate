@@ -8,15 +8,18 @@ public class Budget
     [Key]
     public int BudgetID { get; set; }
 
-    [ForeignKey("Expense")]
-    public int? ExpenseId { get; set; }
-
-    public Expense? Expense { get; set; }
+    public ICollection<Expense> Expenses { get; set; }
 
     public double Amount { get; set; }
 
     public DateTime StartDate { get; set; }
 
     public DateTime EndDate { get; set; }
+
+    public double TotalExpenses { get; set; }
+
+    public double RemainingAmount => Amount - TotalExpenses;
+
+    public double PreviousExpenses { get; set; }
 
 }

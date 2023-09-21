@@ -66,7 +66,9 @@ public class PaymentMethodService : IPaymentMethodService
 
         entity.PaymentName = model.PaymentName;
 
-        return await _context.SaveChangesAsync() == 1;
+        await _context.SaveChangesAsync();
+
+        return true;
     }
 
     public async Task<bool> DeletePaymentMethod(int id)

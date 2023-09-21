@@ -1,22 +1,273 @@
+/* Base font size */
 html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
     font-size: 16px;
-  }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+/* Increase font size for larger screens */
+@media (min-width: 768px) {
+    html {
+        font-size: 18px;
+    }
 }
 
+/* Focus styles for buttons, links, and form elements */
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+.form-control {
+    
+    border: 1px solid #258cfb;
+}
+
+/* Ensure the footer is at the bottom of the page */
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    background-color: #FFE4C4;
+}
+
+/* Customize button styles */
+.btn {
+    background-color: #258cfb;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+/* Container styles */
+.container {
+    text-align: center;
+}
+
+.graph-container{
+    min-height: 500px;
+}
+/* Add a border and shadow to the section container */
+.section-container {
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 20px; /* Add padding for spacing */
+    border-radius: 10px; /* Add rounded corners */
+    margin: 0 auto;
+    max-width: 500px;
+    background-color: white;
+}
+
+.utility-container {
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 20px; /* Add padding for spacing */
+    border-radius: 10px; /* Add rounded corners */
+    margin: 0 auto;
+    max-width: 700px;
+    background-color: white;
+}
+.budget-container {
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 20px; /* Add padding for spacing */
+    border-radius: 10px; /* Add rounded corners */
+    margin: 0 auto;
+    max-width: 1000px;
+    background-color: white;
+}
+.expense-container {
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 20px; /* Add padding for spacing */
+    border-radius: 10px; /* Add rounded corners */
+    margin: 0 auto;
+    max-width: 1200px;
+    background-color: white;
+}
+.home-container {
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 2rem; /* Add padding for spacing */
+    border-radius: 10px; /* Add rounded corners */
+    margin: 0 auto;
+    max-width: 1000px;
+    background-color: white;
+}
+.detail-container {
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 2rem; /* Add padding for spacing */
+    border-radius: 10px; /* Add rounded corners */
+    margin: 0 auto;
+    max-width: 1000px;
+    background-color: white;
+}
+
+
+
+/* Button hover effect */
+.btn:hover {
+    background-color: #007bff;
+}
+
+/* Center text in headings and paragraphs */
+h1, h2, p {
+    text-align: center;
+}
+
+.jumbotron {
+    padding: 50px;
+    border-radius: 10px;
+    box-shadow: 0 0 0 rgba(0, 0, 0, 1); /* Remove box-shadow */
+   
+}
+
+    /* Rest of your CSS remains the same */
+
+
+    /* Custom CSS for the h1 element inside the jumbotron */
+    .jumbotron h1 {
+        font-size: 3rem;
+        font-weight: bold;
+        text-decoration: underline;
+        text-decoration-thickness: 3px;
+        transition: transform 10s ease-in;
+    }
+
+    /* Custom CSS for the lead paragraph */
+    .jumbotron p.lead {
+        font-size: 18px;
+    }
+
+    /* Hover effect for the jumbotron h1 element */
+    .jumbotron h1:hover {
+        
+        transform: scale(5);
+    }
+
+.btn-jumbo {
+    background-color: #258cfb;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+    .btn-jumbo:hover {
+        background-color: white;
+        color: #258cfb;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+
+/* Style for links */
+a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+/* Column styling */
+.col-md-4 {
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+    justify-content: center;
+    
+}
+
+    /* Column hover effect */
+    .col-md-4:hover {
+        background-color: #007bff;
+        color: white;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+/* Hover effect for links */
+a:hover {
+    text-decoration: underline;
+}
+
+.custom-margin {
+    margin-right: 10px; /* Adjust the margin as needed */
+}
+
+/* Custom CSS for the smaller select element */
+.form-control-sm {
+    text-align: center;
+        height: 30px;
+    max-width: 125px;
+    padding: 0.25rem 0.5rem;
+}
+
+/* Table styling */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+    .table th,
+    .table td {
+        padding: 8px 12px;
+        text-align: left;
+    }
+
+    .table th {
+        background-color: #f8f9fa;
+        font-weight: bold;
+    }
+
+    /* Table row hover effect */
+    .table tbody tr:hover {
+        background-color: #f0f8ff;
+    }
+
+/* Responsive table styles */
+@media (max-width: 768px) {
+    .table {
+        display: block;
+    }
+
+        .table thead,
+        .table tbody,
+        .table th,
+        .table td,
+        .table tr {
+            display: block;
+        }
+
+        .table thead {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+
+        .table tr {
+            margin-bottom: 15px;
+        }
+
+        .table td {
+            border: none;
+            border-bottom: 1px solid #ddd;
+            position: relative;
+            padding-left: 50%;
+        }
+
+            .table td:before {
+                content: attr(data-label);
+                position: absolute;
+                left: 0;
+                width: 50%;
+                padding-right: 15px;
+                white-space: nowrap;
+            }
 }

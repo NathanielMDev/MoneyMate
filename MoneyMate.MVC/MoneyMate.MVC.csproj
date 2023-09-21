@@ -15,6 +15,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.10" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,11 +34,13 @@
     <None Remove="Views\Expense\" />
     <None Remove="Views\ExpenseCategory\" />
     <None Remove="Views\PaymentMethod\" />
+    <None Remove="Views\Budget\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Currency\" />
     <Folder Include="Views\Expense\" />
     <Folder Include="Views\ExpenseCategory\" />
     <Folder Include="Views\PaymentMethod\" />
+    <Folder Include="Views\Budget\" />
   </ItemGroup>
 </Project>
