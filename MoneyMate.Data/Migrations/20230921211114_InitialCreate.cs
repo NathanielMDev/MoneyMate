@@ -264,8 +264,8 @@ namespace MoneyMate.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "07ea0f5f-de95-4dc4-a614-5cda048c0a0c", null, "Administrator", "ADMINISTRATOR" },
-                    { "b8e00d6b-104a-499f-a83a-782985f480b3", null, "User", "USER" }
+                    { "18c8aaf0-3bc6-4817-9988-99848f50a72a", null, "User", "USER" },
+                    { "95518379-f0c6-422b-a7bf-8d6a54d9baf4", null, "Administrator", "ADMINISTRATOR" }
                 });
 
             migrationBuilder.CreateIndex(

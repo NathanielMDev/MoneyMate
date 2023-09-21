@@ -57,14 +57,10 @@
     <hr/>
 </div>
 
-
-
-
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
-        // Function to create and render the bar chart
         function createBarChart() {
             var ctx = document.getElementById('categoryChart').getContext('2d');
             var categoryData = @Html.Raw(Json.Serialize(Model.CategoryTotals.Select(ct => ct.CategoryName).ToList()));
@@ -115,15 +111,10 @@
                 }
             });
         }
-
-        // Call the function to create the bar chart
         createBarChart();
     </script>
 
-
-
     <script>
-        // Function to create and render the pie chart
         function createPieChart() {
             var pieCtx = document.getElementById('categoryPieChart').getContext('2d');
             var pieData = @Html.Raw(Json.Serialize(Model.CategoryTotals.Select(ct => ct.TotalAmount).ToList()));
@@ -173,8 +164,6 @@
                 }
             });
         }
-
-        // Call the function to create the pie chart
         createPieChart();
     </script>
 }
