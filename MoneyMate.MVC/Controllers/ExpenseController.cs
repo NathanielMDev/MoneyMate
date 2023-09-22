@@ -18,10 +18,8 @@ public class ExpenseController : Controller
 
     public async Task<IActionResult> Index(string sortOption)
     {
-        // Retrieve the list of expenses from the service
         var expenses = await _service.GetAllExpenses();
 
-        // Sort expenses based on the selected sorting option
         switch (sortOption)
         {
             case "amount":
@@ -30,22 +28,18 @@ public class ExpenseController : Controller
             case "date":
                 expenses = expenses.OrderByDescending(e => e.Date).ToList();
                 break;
-            case "category": // Sort by CategoryId
+            case "category":
                 expenses = expenses.OrderBy(e => e.CategoryId).ToList();
                 break;
-            default: // Default sorting by ID
+            default:
                 expenses = expenses.OrderBy(e => e.Id).ToList();
                 break;
         }
 
-        ViewBag.SortOption = sortOption; // Pass the selected sort option to the view
+        ViewBag.SortOption = sortOption;
 
         return View(expenses);
     }
-
-
-
-
 
     public async Task<IActionResult> Create()
     {
