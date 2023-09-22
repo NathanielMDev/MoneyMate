@@ -74,13 +74,13 @@
     function applySort() {
         var selectedSortOption = document.getElementById("sortOption").value;
         var currentUrl = window.location.href;
-        var urlWithoutQuery = currentUrl.split('?')[0]; // Remove existing query parameters
+        var urlWithoutQuery = currentUrl.split('?')[0]; 
         var newUrl = urlWithoutQuery + '?sortOption=' + selectedSortOption;
         window.location.href = newUrl;
     }
 
     function setSelectedOption() {
-        var selectedSortOption = "@ViewBag.SortOption"; // Get the selected option from ViewBag
+        var selectedSortOption = "@ViewBag.SortOption";
         var dropdown = document.getElementById("sortOption");
 
         for (var i = 0; i < dropdown.options.length; i++) {

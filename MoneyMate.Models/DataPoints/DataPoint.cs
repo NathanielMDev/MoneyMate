@@ -6,7 +6,6 @@ using System.Web;
 
 namespace MoneyMate.Models.DataPoints;
 
-//DataContract for Serializing Data - required to serve in JSON format
 [DataContract]
 public class DataPoint
 {
@@ -16,11 +15,9 @@ public class DataPoint
         this.Y = y;
     }
 
-    //Explicitly setting the name to be used while serializing to JSON.
     [DataMember(Name = "x")]
     public Nullable<double> X = null;
 
-    //Explicitly setting the name to be used while serializing to JSON.
     [DataMember(Name = "y")]
     public Nullable<double> Y = null;
 
