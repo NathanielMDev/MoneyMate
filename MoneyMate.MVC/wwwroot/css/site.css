@@ -26,7 +26,7 @@ html {
 }
 
 body {
-    background-color: #FFE4C4;
+    background-color: #FFE4C4;    
 }
 
 .btn {
@@ -133,7 +133,7 @@ h1, h2, p {
     }
 
     .jumbotron h1:hover {
-        transform: scale(5);
+        transform: scale(5.5);
     }
 
 .btn-jumbo {
@@ -208,6 +208,9 @@ a:hover {
     .table tbody tr:hover {
         background-color: #f0f8ff;
     }
+
+
+
 
 @media (max-width: 768px) {
     .table {

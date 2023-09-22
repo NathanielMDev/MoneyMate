@@ -12,7 +12,7 @@ using MoneyMate.Data.DataEntities;
 namespace MoneyMate.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230921211114_InitialCreate")]
+    [Migration("20230922133926_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -54,13 +54,13 @@ namespace MoneyMate.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "95518379-f0c6-422b-a7bf-8d6a54d9baf4",
+                            Id = "00e7bc83-16be-4b5f-99fc-58cba61c7f4e",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
-                            Id = "18c8aaf0-3bc6-4817-9988-99848f50a72a",
+                            Id = "9980cebe-fb54-42af-8a89-fb4958c9c90b",
                             Name = "User",
                             NormalizedName = "USER"
                         });
