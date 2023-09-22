@@ -51,13 +51,13 @@ namespace MoneyMate.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3b372445-4842-4f60-abe8-55bbe893a0ac",
+                            Id = "00e7bc83-16be-4b5f-99fc-58cba61c7f4e",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
-                            Id = "1173a902-49da-4bce-9436-af8213432a82",
+                            Id = "9980cebe-fb54-42af-8a89-fb4958c9c90b",
                             Name = "User",
                             NormalizedName = "USER"
                         });
